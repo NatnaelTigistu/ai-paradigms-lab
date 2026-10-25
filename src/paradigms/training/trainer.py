@@ -127,7 +127,8 @@ def fit(
                 f"Train Loss: {train_loss:.4f} | "
                 f"Dev Loss: {dev['loss']:.4f} | "
                 f"Dev Acc: {dev['accuracy']:.4f} | "
-                f"{elapsed:.2f}s"
+                f"{elapsed:.2f}s",
+                flush=True,
             )
 
     if best_state is not None:
