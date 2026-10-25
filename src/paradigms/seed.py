@@ -32,3 +32,9 @@ def seed_everything(seed: int) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+
+
+def set_seed(seed: int) -> None:
+    """Convenience alias for seed_everything, establishing explicit global seed."""
+    seed_everything(seed)
+
