@@ -1,0 +1,10 @@
+distillation:
+  teacher_seed: 0          # one fixed teacher for all students (limitation: teacher variance not measured)
+  teacher_ckpt_dir: checkpoints/teacher
+  default_T: 4
+  default_alpha: 0.5
+  sweeps:
+    temperature: [1, 2, 4, 8, 16]
+    alpha: [0.0, 0.3, 0.5, 0.7, 1.0]
+    fraction: [0.01, 0.05, 0.10, 0.25, 1.0]
+    hidden: [8, 16, 32, 64, 128]
