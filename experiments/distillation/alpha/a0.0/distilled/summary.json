@@ -1,0 +1,9 @@
+{
+  "dev_accuracy_mean": 0.8706499934196472,
+  "dev_accuracy_std": 5.0008296966552734e-05,
+  "seeds": [
+    0,
+    1
+  ],
+  "params": 25450
+}
