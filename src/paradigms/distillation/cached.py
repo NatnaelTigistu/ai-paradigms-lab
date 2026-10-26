@@ -19,22 +19,7 @@ def cache_teacher_logits(
     batch_size: int = 512,
     device: str = "cpu",
 ) -> torch.Tensor:
-    """Compute and cache teacher logits for all 60,000 train images in dataset order.
-
-    If cached tensor already exists at `path`, loads and returns it. Otherwise,
-    evaluates the frozen teacher in eval mode without gradients and persists
-    the resulting (60000, 10) tensor.
-
-    Args:
-        teacher: Trained PyTorch teacher model.
-        data: FashionData instance managing Fashion-MNIST dataset.
-        path: Filepath for cached tensor storage.
-        batch_size: Inference batch size for logits computation.
-        device: Device on which teacher inference executes.
-
-    Returns:
-        torch.Tensor of shape (60000, 10) containing raw teacher logits.
-    """
+    """Compute and cache teacher logits for all 60,000 train images in dataset order."""
     p = Path(path)
     if p.exists():
         return torch.load(p, map_location="cpu")
@@ -42,6 +27,7 @@ def cache_teacher_logits(
     teacher.eval()
     teacher.to(device)
 
+    # Materialize normalized images directly into tensor
     raw_data = data.full_train.data
     X = ((raw_data.float() / 255.0 - MEAN) / STD).unsqueeze(1)
     n_samples = len(X)
@@ -55,9 +41,7 @@ def cache_teacher_logits(
 
     all_logits = torch.cat(logits_list, dim=0)
     if all_logits.shape != (n_samples, 10):
-        raise ValueError(
-            f"Expected cached logits shape ({n_samples}, 10), got {all_logits.shape}"
-        )
+        raise ValueError(f"Expected cached logits shape ({n_samples}, 10), got {all_logits.shape}")
 
     p.parent.mkdir(parents=True, exist_ok=True)
     torch.save(all_logits, p)
@@ -71,30 +55,7 @@ def masked_distillation_loss(
     T: float,
     alpha: float,
 ) -> torch.Tensor:
-    """Compute masked distillation loss supporting partially or fully unlabeled batches.
-
-    A label value of -1 indicates an unlabelled sample.
-    Per sample i:
-        kd_i = T * T * sum_c p_t(c) * (log p_t(c) - log p_s(c))
-        ce_i = cross_entropy(s_i, y_i) if labelled else 0
-        loss = mean_i( alpha * labelled_i * ce_i + (1 - alpha * labelled_i) * kd_i )
-
-    Labelled samples contribute alpha * CE + (1 - alpha) * KD.
-    Unlabelled samples contribute pure KD (1 * KD).
-
-    Args:
-        s_logits: Student logits of shape (B, C).
-        labels: Target labels of shape (B,), with -1 denoting unlabelled.
-        t_logits: Teacher logits of shape (B, C).
-        T: Distillation temperature (> 0).
-        alpha: Weight for hard cross-entropy in [0, 1].
-
-    Raises:
-        ValueError: If T <= 0 or alpha not in [0, 1].
-
-    Returns:
-        Scalar loss tensor.
-    """
+    """Compute masked distillation loss supporting partially or fully unlabeled batches (-1 label)."""
     if T <= 0:
         raise ValueError(f"Temperature T must be positive, got {T}")
     if not (0.0 <= alpha <= 1.0):
@@ -102,10 +63,9 @@ def masked_distillation_loss(
 
     labelled = labels >= 0
 
-    # Soft teacher and student distributions scaled by T
+    # Soft teacher and student distributions scaled by temperature
     log_p_s = F.log_softmax(s_logits / T, dim=-1)
     p_t = F.softmax(t_logits.detach() / T, dim=-1)
-    # PyTorch F.kl_div with log_target=False computes target * (log(target) - input)
     kd = (T * T) * F.kl_div(log_p_s, p_t, reduction="none").sum(dim=-1)
 
     # Cross-entropy for labelled samples (clamp min=0 to prevent negative index errors)
@@ -113,6 +73,7 @@ def masked_distillation_loss(
     ce_all = F.cross_entropy(s_logits, safe_labels, reduction="none")
     ce = torch.where(labelled, ce_all, torch.zeros_like(kd))
 
+    # Blend losses: labelled gets alpha*CE + (1-alpha)*KD, unlabelled gets KD only
     labelled_f = labelled.float()
     sample_loss = (alpha * labelled_f * ce) + ((1.0 - alpha * labelled_f) * kd)
     return sample_loss.mean()

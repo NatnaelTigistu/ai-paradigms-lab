@@ -16,12 +16,12 @@ def test_final_test_v2_refuses_when_output_exists(tmp_path: Path):
     dummy_out = tmp_path / "final_test.json"
     dummy_out.write_text("{}", encoding="utf-8")
 
-    # Should exit with code 1 without --force
+    # Verify exit code 1 when output exists without force
     with pytest.raises(SystemExit) as exc_info:
         check_refusal(dummy_out, force=False)
     assert exc_info.value.code == 1
 
-    # Should not exit when force=True
+    # Verify execution proceeds when force is set
     check_refusal(dummy_out, force=True)
 
 

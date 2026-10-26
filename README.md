@@ -27,6 +27,7 @@ Phase 1: complete
 
 A rigorous, label-efficient study evaluating distillation across low-data regimes (2%, 10%, 100% labelled data) with fair independent hyperparameter tuning and representation transfer over unlabelled samples.
 
+- **Comprehensive Deep Dive & Guide**: [COMPREHENSIVE_GUIDE.md](file:///home/natnale/ai-paradigms-lab/docs/COMPREHENSIVE_GUIDE.md)
 - **Motivation & Retrospective**: [WHY_RETRAIN.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/WHY_RETRAIN.md)
 - **Experimental Protocol**: [PROTOCOL.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/PROTOCOL.md)
 - **Results & Verdicts**: [RESULTS.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/RESULTS.md)

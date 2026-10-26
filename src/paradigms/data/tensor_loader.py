@@ -13,12 +13,7 @@ from paradigms.seed import make_generator
 
 
 class TensorLoader:
-    """In-memory data loader yielding sliced batches of pre-materialized tensors.
-
-    Avoids per-epoch torchvision transform overhead by keeping normalized
-    tensors directly in memory. Generator-based randperm ensures reproducible
-    and advancing permutations across consecutive epochs.
-    """
+    """In-memory data loader yielding sliced batches of pre-materialized tensors."""
 
     def __init__(
         self,
@@ -62,10 +57,7 @@ class TensorLoader:
         if self.n_samples == 0:
             return
 
-        if self.shuffle:
-            indices = torch.randperm(self.n_samples, generator=self.generator)
-        else:
-            indices = None
+        indices = torch.randperm(self.n_samples, generator=self.generator) if self.shuffle else None
 
         for start in range(0, self.n_samples, self.batch_size):
             end = min(start + self.batch_size, self.n_samples)
@@ -82,11 +74,7 @@ def make_fast_loader(
     shuffle: bool = False,
     seed: int = 0,
 ) -> TensorLoader:
-    """Materialize a Fashion-MNIST Dataset or Subset into a fast TensorLoader.
-
-    Computes normalized tensor X as ((data[idx].float()/255 - MEAN)/STD).unsqueeze(1)
-    and target labels Y = targets[idx].
-    """
+    """Materialize a Fashion-MNIST Dataset or Subset into a fast TensorLoader."""
     if isinstance(dataset, Subset):
         idx = torch.as_tensor(dataset.indices, dtype=torch.long)
         base_ds = dataset.dataset
@@ -96,7 +84,7 @@ def make_fast_loader(
         raw_x = dataset.data
         raw_y = dataset.targets
     else:
-        # Fallback for generic datasets: materialize via standard single-batch loader
+        # Fallback for generic datasets: materialize via single-batch loader
         loader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
         raw_x, raw_y = next(iter(loader))
         return TensorLoader(raw_x, raw_y, batch_size=batch_size, shuffle=shuffle, seed=seed)

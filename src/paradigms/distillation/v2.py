@@ -35,32 +35,7 @@ def run_student_v2(
     ckpt_path: Optional[str | Path] = None,
     verbose: bool = False,
 ) -> dict[str, Any]:
-    """Execute student training in Phase 1 v2 across hard, distilled, or transfer modes.
-
-    Optimized for CPU efficiency:
-    - Sets single-thread PyTorch execution to eliminate thread sync overhead on small MLPs.
-    - Precomputes teacher softmax probabilities p_t once per run for temperature T.
-    - Evaluates development accuracy in a single inference pass under torch.inference_mode.
-    - Avoids deepcopy overhead by cloning tensor parameters only on dev accuracy improvement.
-
-    Args:
-        cfg: Configuration dictionary or namespace.
-        data: FashionData manager.
-        cache: Precomputed teacher logits tensor of shape (60000, 10), or file path.
-        seed: Random seed for model initialization and batch shuffling.
-        mode: One of "hard", "distilled", or "distilled_transfer".
-        fraction: Fraction of training data to use in (0.0, 1.0].
-        hidden: Hidden dimension for student MLP (default 32).
-        T: Distillation temperature (for distilled and distilled_transfer).
-        alpha: Loss weighting factor in [0, 1].
-        wd: Weight decay for Adam optimizer.
-        base_epochs: Base epoch budget for full data (default 30).
-        ckpt_path: Optional path to save best dev model checkpoint.
-        verbose: Verbose trainer output flag.
-
-    Returns:
-        Result dictionary containing model performance, hyperparameters, and history.
-    """
+    """Execute student training across hard, distilled, or transfer modes."""
     valid_modes = ("hard", "distilled", "distilled_transfer")
     if mode not in valid_modes:
         raise ValueError(f"Unknown mode '{mode}'. Expected one of {valid_modes}")
@@ -72,10 +47,10 @@ def run_student_v2(
         if T is None or alpha is None:
             raise ValueError(f"T and alpha must be provided for mode '{mode}'")
 
-    # Enforce single-thread execution for fast small-MLP inference/training on CPU
+    # Enforce single-thread execution to eliminate CPU thread coordination overhead
     torch.set_num_threads(1)
 
-    # Load cache if provided as filepath
+    # Load cached teacher logits if provided as filepath
     if isinstance(cache, (str, Path)):
         cached_logits = torch.load(cache, map_location="cpu")
     elif isinstance(cache, torch.Tensor):
@@ -83,11 +58,11 @@ def run_student_v2(
     else:
         cached_logits = None
 
-    # Step 1 & 2: Set seed, build student model BEFORE building loader (matching v1 RNG sequence)
+    # Seed environment and construct model before loader
     set_seed(seed)
     model = build_model("student_mlp", hidden=hidden)
 
-    # Step 3: Determine split seed and train subset indices
+    # Determine subset indices for requested data fraction
     if hasattr(cfg, "data") and hasattr(cfg.data, "split_seed"):
         split_seed = int(cfg.data.split_seed)
     elif isinstance(cfg, dict):
@@ -101,16 +76,14 @@ def run_student_v2(
         subset = data.train_indices_subset(fraction, seed=split_seed)
         subset_indices = list(subset.indices)
 
-    # Step 4: Construct contiguous tensors
     all_train_indices = list(data.splits["train"])
 
+    # Construct contiguous input and target tensors
     if mode == "hard":
         target_indices = subset_indices
         raw_x = data.full_train.data[target_indices]
         X = ((raw_x.float() / 255.0 - MEAN) / STD).unsqueeze(1).contiguous()
         raw_y = data.full_train.targets[target_indices].long().contiguous()
-
-        # packed has shape (N, 11) with label in col 0 to adhere to spec
         t_dummy = torch.zeros(len(target_indices), 10, dtype=torch.float32)
         packed = torch.cat([raw_y.unsqueeze(1).float(), t_dummy], dim=1).contiguous()
         epochs = effective_epochs(base_epochs, fraction)
@@ -124,7 +97,6 @@ def run_student_v2(
             raise ValueError("cached teacher logits required for distilled mode")
 
         t_logits = cached_logits[target_indices]
-        # Precompute teacher softmax probabilities at temperature T once per run
         p_t = F.softmax(t_logits / float(T), dim=-1).contiguous()
         packed = torch.cat([raw_y.unsqueeze(1).float(), p_t], dim=1).contiguous()
         epochs = effective_epochs(base_epochs, fraction)
@@ -133,6 +105,7 @@ def run_student_v2(
         raw_x = data.full_train.data[target_indices]
         X = ((raw_x.float() / 255.0 - MEAN) / STD).unsqueeze(1).contiguous()
 
+        # Labels: keep true label for subset indices, -1 elsewhere
         subset_set = set(subset_indices)
         raw_y = torch.full((len(target_indices), 1), -1.0, dtype=torch.float32)
         idx_to_pos = {idx: pos for pos, idx in enumerate(target_indices)}
@@ -156,10 +129,8 @@ def run_student_v2(
     X_dev = ((raw_x_dev.float() / 255.0 - MEAN) / STD).unsqueeze(1).contiguous()
     Y_dev = data.full_train.targets[dev_indices].long().contiguous()
 
-    # Step 5: Optimizer setup
     opt = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=float(wd))
 
-    # Step 6: Training loop with fast dev evaluation and clone checkpointing
     t0 = time.time()
     best_acc: float = -1.0
     best_epoch: int = -1
@@ -170,6 +141,7 @@ def run_student_v2(
     alpha_val = float(alpha) if alpha is not None else 1.0
     T_sq = T_val * T_val
 
+    # Main training loop
     for epoch in range(1, epochs + 1):
         t_ep = time.time()
         model.train()
@@ -223,21 +195,18 @@ def run_student_v2(
             "seconds": elapsed_ep,
         })
 
-        # Strict > ensures ties preserve the earliest epoch
+        # Retain earliest epoch on accuracy ties
         if dev_acc > best_acc:
             best_acc = dev_acc
             best_epoch = epoch
             best_state = {k: v.clone() for k, v in model.state_dict().items()}
 
         if verbose:
-            print(
-                f"Epoch {epoch:02d}/{epochs:02d} | Train: {train_loss:.4f} | "
-                f"Dev Loss: {dev_loss:.4f} | Dev Acc: {dev_acc * 100:.2f}% | {elapsed_ep:.2f}s"
-            )
+            print(f"Epoch {epoch:02d}/{epochs:02d} | Train: {train_loss:.4f} | Dev Acc: {dev_acc * 100:.2f}%")
 
     elapsed_seconds = time.time() - t0
 
-    # Step 7: Load best state and compute per-class accuracy
+    # Load best checkpoint weights and compute final per-class metrics
     if best_state is not None:
         model.load_state_dict(best_state)
 

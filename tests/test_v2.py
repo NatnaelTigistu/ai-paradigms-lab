@@ -32,7 +32,7 @@ def test_masked_loss_equals_v1_when_all_labelled():
 
     assert torch.allclose(loss_v1, loss_masked, atol=1e-6)
 
-    # Gradient match
+    # Verify gradient equivalence
     g1 = torch.autograd.grad(loss_v1, s_logits, retain_graph=True)[0]
     g2 = torch.autograd.grad(loss_masked, s_logits, retain_graph=True)[0]
     assert torch.allclose(g1, g2, atol=1e-6)
@@ -60,18 +60,18 @@ def test_tensor_loader_covers_each_sample_once_per_epoch():
     Y = torch.arange(N).long()
 
     loader = TensorLoader(X, Y, batch_size=16, shuffle=True, seed=999)
-    assert len(loader) == 7  # ceil(105 / 16) = 7
+    assert len(loader) == 7
 
-    # Epoch 1
+    # Verify epoch 1 covers all samples exactly once
     seen1 = torch.cat([y for _, y in loader])
     assert len(seen1) == N
     assert torch.equal(seen1.sort().values, torch.arange(N))
 
-    # Epoch 2 (shuffling advances)
+    # Verify epoch 2 advances permutation
     seen2 = torch.cat([y for _, y in loader])
     assert len(seen2) == N
     assert torch.equal(seen2.sort().values, torch.arange(N))
-    assert not torch.equal(seen1, seen2), "Generator should advance and produce different permutation across epochs"
+    assert not torch.equal(seen1, seen2)
 
 
 def test_cached_logits_equal_teacher_forward():
@@ -136,7 +136,7 @@ def test_transfer_mode_never_reads_unlabelled_labels():
     cache = cache_teacher_logits(teacher, data, path="checkpoints/v2/teacher_logits.pt")
     cfg = {"data": {"split_seed": 42}}
 
-    # 1. Normal transfer run
+    # Run baseline transfer student
     res_normal = run_student_v2(
         cfg=cfg,
         data=data,
@@ -149,14 +149,13 @@ def test_transfer_mode_never_reads_unlabelled_labels():
         base_epochs=1,
     )
 
-    # 2. Corrupt unlabelled train sample targets in data.full_train.targets
+    # Corrupt unlabelled train targets to verify label independence
     orig_targets = data.full_train.targets.clone()
     subset = data.train_indices_subset(0.01, seed=42)
     subset_set = set(subset.indices)
     unlabelled_train = set(data.splits["train"]) - subset_set
 
     try:
-        # Fill unlabelled train samples with bogus targets (999)
         corrupted_targets = orig_targets.clone()
         for idx in unlabelled_train:
             corrupted_targets[idx] = 999
@@ -177,5 +176,4 @@ def test_transfer_mode_never_reads_unlabelled_labels():
         assert res_normal["dev_accuracy"] == res_corrupted["dev_accuracy"]
         assert pytest.approx(res_normal["history"][0]["train_loss"], abs=1e-5) == res_corrupted["history"][0]["train_loss"]
     finally:
-        # Restore original targets
         data.full_train.targets = orig_targets
