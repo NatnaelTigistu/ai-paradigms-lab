@@ -1,0 +1,198 @@
+{
+  "f0.02": {
+    "fraction": 0.02,
+    "hard": {
+      "dev_accuracy_mean": 0.8086999893188477,
+      "dev_accuracy_std": 0.0003033181871680225,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "hard",
+      "fraction": 0.02,
+      "hidden": 32,
+      "T": null,
+      "alpha": null,
+      "wd": 0.001,
+      "epochs": 400,
+      "params": 25450
+    },
+    "distilled": {
+      "dev_accuracy_mean": 0.8248200058937073,
+      "dev_accuracy_std": 0.0020730799840838897,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "distilled",
+      "fraction": 0.02,
+      "hidden": 32,
+      "T": 4.0,
+      "alpha": 0.2,
+      "wd": 0.001,
+      "epochs": 400,
+      "params": 25450
+    },
+    "distilled_minus_hard": {
+      "mean_diff": 0.01612001657485962,
+      "std_diff": 0.0019009644486915832,
+      "wins": 5,
+      "n": 5,
+      "verdict": "WIN"
+    },
+    "distilled_transfer": {
+      "dev_accuracy_mean": 0.8702400088310241,
+      "dev_accuracy_std": 0.0011271170934176078,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "distilled_transfer",
+      "fraction": 0.02,
+      "hidden": 32,
+      "T": 4.0,
+      "alpha": 0.8,
+      "wd": 0.001,
+      "epochs": 30,
+      "params": 25450
+    },
+    "transfer_minus_hard": {
+      "mean_diff": 0.06154001951217651,
+      "std_diff": 0.0010725649422691735,
+      "wins": 5,
+      "n": 5,
+      "verdict": "WIN"
+    }
+  },
+  "f0.1": {
+    "fraction": 0.1,
+    "hard": {
+      "dev_accuracy_mean": 0.8501199841499328,
+      "dev_accuracy_std": 0.0012335235976797935,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "hard",
+      "fraction": 0.1,
+      "hidden": 32,
+      "T": null,
+      "alpha": null,
+      "wd": 0.001,
+      "epochs": 300,
+      "params": 25450
+    },
+    "distilled": {
+      "dev_accuracy_mean": 0.8598999977111816,
+      "dev_accuracy_std": 0.0012601653890778454,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "distilled",
+      "fraction": 0.1,
+      "hidden": 32,
+      "T": 4.0,
+      "alpha": 0.5,
+      "wd": 0.001,
+      "epochs": 300,
+      "params": 25450
+    },
+    "distilled_minus_hard": {
+      "mean_diff": 0.009780013561248779,
+      "std_diff": 0.00223194204310937,
+      "wins": 5,
+      "n": 5,
+      "verdict": "WIN"
+    },
+    "distilled_transfer": {
+      "dev_accuracy_mean": 0.8712599873542786,
+      "dev_accuracy_std": 0.00045868259047206265,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "distilled_transfer",
+      "fraction": 0.1,
+      "hidden": 32,
+      "T": 4.0,
+      "alpha": 0.2,
+      "wd": 0.001,
+      "epochs": 30,
+      "params": 25450
+    },
+    "transfer_minus_hard": {
+      "mean_diff": 0.021140003204345705,
+      "std_diff": 0.0013602898581597954,
+      "wins": 5,
+      "n": 5,
+      "verdict": "WIN"
+    }
+  },
+  "f1.0": {
+    "fraction": 1.0,
+    "hard": {
+      "dev_accuracy_mean": 0.8819600105285644,
+      "dev_accuracy_std": 0.0012240770646580205,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "hard",
+      "fraction": 1.0,
+      "hidden": 32,
+      "T": null,
+      "alpha": null,
+      "wd": 0.0001,
+      "epochs": 30,
+      "params": 25450
+    },
+    "distilled": {
+      "dev_accuracy_mean": 0.8839400053024292,
+      "dev_accuracy_std": 0.001570482130306972,
+      "seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "mode": "distilled",
+      "fraction": 1.0,
+      "hidden": 32,
+      "T": 1.0,
+      "alpha": 0.5,
+      "wd": 0.0001,
+      "epochs": 30,
+      "params": 25450
+    },
+    "distilled_minus_hard": {
+      "mean_diff": 0.0019799947738647463,
+      "std_diff": 0.0017057559548908083,
+      "wins": 4,
+      "n": 5,
+      "verdict": "WIN"
+    }
+  }
+}

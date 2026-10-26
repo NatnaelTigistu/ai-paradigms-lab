@@ -1,0 +1,613 @@
+{
+  "selected_on": "dev",
+  "f0.02": {
+    "fraction": 0.02,
+    "wd": 0.001,
+    "T": 4.0,
+    "alpha": 0.2,
+    "alpha_transfer": 0.8,
+    "tables": {
+      "hard_wd": [
+        {
+          "dev_accuracy_mean": 0.8048333326975504,
+          "dev_accuracy_std": 0.0022365643397373853,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8045000036557516,
+          "dev_accuracy_std": 0.0021648585972490046,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0001,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8078666726748148,
+          "dev_accuracy_std": 0.0008055418126882455,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        }
+      ],
+      "distilled_T": [
+        {
+          "dev_accuracy_mean": 0.8199333349863688,
+          "dev_accuracy_std": 0.0014008069734143774,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8225000103314718,
+          "dev_accuracy_std": 0.0005098852557323869,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 2.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8235666751861572,
+          "dev_accuracy_std": 0.002430831118322038,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        }
+      ],
+      "distilled_alpha": [
+        {
+          "dev_accuracy_mean": 0.8240666588147482,
+          "dev_accuracy_std": 0.0013767801933733995,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.2,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8235666751861572,
+          "dev_accuracy_std": 0.002430831118322038,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8225666880607605,
+          "dev_accuracy_std": 0.002456736303005821,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.8,
+          "wd": 0.001,
+          "epochs": 400,
+          "params": 25450
+        }
+      ],
+      "transfer_alpha": [
+        {
+          "dev_accuracy_mean": 0.8724666635195414,
+          "dev_accuracy_std": 0.0008806738605157024,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.2,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8726999958356222,
+          "dev_accuracy_std": 0.00021603294541564224,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8736333250999451,
+          "dev_accuracy_std": 0.0001885650002377399,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.02,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.8,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        }
+      ]
+    }
+  },
+  "f0.1": {
+    "fraction": 0.1,
+    "wd": 0.001,
+    "T": 4.0,
+    "alpha": 0.5,
+    "alpha_transfer": 0.2,
+    "tables": {
+      "hard_wd": [
+        {
+          "dev_accuracy_mean": 0.8479666709899902,
+          "dev_accuracy_std": 0.0004988960965998952,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8480666677157084,
+          "dev_accuracy_std": 0.0002867432554381772,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0001,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8490333358446757,
+          "dev_accuracy_std": 0.00016996824617398964,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        }
+      ],
+      "distilled_T": [
+        {
+          "dev_accuracy_mean": 0.8554333448410034,
+          "dev_accuracy_std": 0.001697707432377226,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8587000171343485,
+          "dev_accuracy_std": 0.001961286290177872,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 2.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.859499990940094,
+          "dev_accuracy_std": 0.0010424306850053524,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        }
+      ],
+      "distilled_alpha": [
+        {
+          "dev_accuracy_mean": 0.8581666747728983,
+          "dev_accuracy_std": 0.0012918461902832583,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.2,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.859499990940094,
+          "dev_accuracy_std": 0.0010424306850053524,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8565333485603333,
+          "dev_accuracy_std": 0.0003771300004754798,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.8,
+          "wd": 0.001,
+          "epochs": 300,
+          "params": 25450
+        }
+      ],
+      "transfer_alpha": [
+        {
+          "dev_accuracy_mean": 0.8734000126520792,
+          "dev_accuracy_std": 0.0010033378494603638,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.2,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8723333279291788,
+          "dev_accuracy_std": 0.000634213867785056,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8727666735649109,
+          "dev_accuracy_std": 0.000837977481770324,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled_transfer",
+          "fraction": 0.1,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.8,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        }
+      ]
+    }
+  },
+  "f1.0": {
+    "fraction": 1.0,
+    "wd": 0.0001,
+    "T": 1.0,
+    "alpha": 0.5,
+    "alpha_transfer": null,
+    "tables": {
+      "hard_wd": [
+        {
+          "dev_accuracy_mean": 0.8812666535377502,
+          "dev_accuracy_std": 0.0007408708324478376,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8828000028928121,
+          "dev_accuracy_std": 0.0012027726304103914,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8814000089963278,
+          "dev_accuracy_std": 0.0007071117264167728,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "hard",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": null,
+          "alpha": null,
+          "wd": 0.001,
+          "epochs": 30,
+          "params": 25450
+        }
+      ],
+      "distilled_T": [
+        {
+          "dev_accuracy_mean": 0.8834333419799805,
+          "dev_accuracy_std": 0.00038587033655528447,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.5,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8806333541870117,
+          "dev_accuracy_std": 0.0009741145512472412,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 2.0,
+          "alpha": 0.5,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8786999980608622,
+          "dev_accuracy_std": 0.00037417472790395235,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 4.0,
+          "alpha": 0.5,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        }
+      ],
+      "distilled_alpha": [
+        {
+          "dev_accuracy_mean": 0.8817333380381266,
+          "dev_accuracy_std": 0.0018354338745425072,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.2,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8834333419799805,
+          "dev_accuracy_std": 0.00038587033655528447,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.5,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        },
+        {
+          "dev_accuracy_mean": 0.8823666572570801,
+          "dev_accuracy_std": 0.0013299765087375196,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "mode": "distilled",
+          "fraction": 1.0,
+          "hidden": 32,
+          "T": 1.0,
+          "alpha": 0.8,
+          "wd": 0.0001,
+          "epochs": 30,
+          "params": 25450
+        }
+      ]
+    }
+  }
+}

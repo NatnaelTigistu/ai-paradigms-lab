@@ -1,0 +1,17 @@
+{
+  "dev_accuracy_mean": 0.8048333326975504,
+  "dev_accuracy_std": 0.0022365643397373853,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "mode": "hard",
+  "fraction": 0.02,
+  "hidden": 32,
+  "T": null,
+  "alpha": null,
+  "wd": 0.0,
+  "epochs": 400,
+  "params": 25450
+}

@@ -7,10 +7,13 @@ from paradigms.data.splits import (
     save_splits,
     stratified_subset,
 )
+from paradigms.data.tensor_loader import TensorLoader, make_fast_loader
 
 __all__ = [
     "FashionData",
     "make_loader",
+    "TensorLoader",
+    "make_fast_loader",
     "make_splits",
     "save_splits",
     "load_splits",
