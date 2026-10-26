@@ -1,0 +1,237 @@
+{
+  "models": {
+    "Teacher (CNN)": {
+      "name": "Teacher (CNN)",
+      "params": 421642,
+      "size_bytes": 1689997,
+      "size_kb": 1650.39,
+      "b1_median_ms": 0.7862505000275632,
+      "b256_median_ms": 235.56309999997893,
+      "b1_throughput_samples_per_s": 1271.8592865313833,
+      "b256_throughput_samples_per_s": 1086.7576458283274,
+      "all_runs": [
+        {
+          "name": "Teacher (CNN)",
+          "params": 421642,
+          "size_bytes": 1689997,
+          "size_kb": 1650.39,
+          "latency_b1": {
+            "median_ms": 0.7862505000275632,
+            "p95_ms": 1.4624938000167729,
+            "mean_ms": 0.9211453710031492,
+            "std_ms": 0.3041806916337443,
+            "throughput_samples_per_s": 1271.8592865313833
+          },
+          "latency_b256": {
+            "median_ms": 251.4848779999852,
+            "p95_ms": 275.63387689991714,
+            "mean_ms": 253.29410687000183,
+            "std_ms": 10.57748039232032,
+            "throughput_samples_per_s": 1017.9538508872691
+          }
+        },
+        {
+          "name": "Teacher (CNN)",
+          "params": 421642,
+          "size_bytes": 1689997,
+          "size_kb": 1650.39,
+          "latency_b1": {
+            "median_ms": 0.7942084999967847,
+            "p95_ms": 1.4971778500012078,
+            "mean_ms": 0.8983477570010336,
+            "std_ms": 0.27260263191093304,
+            "throughput_samples_per_s": 1259.1152071578792
+          },
+          "latency_b256": {
+            "median_ms": 235.56309999997893,
+            "p95_ms": 263.4872755500112,
+            "mean_ms": 221.20285942001604,
+            "std_ms": 36.92096168151228,
+            "throughput_samples_per_s": 1086.7576458283274
+          }
+        },
+        {
+          "name": "Teacher (CNN)",
+          "params": 421642,
+          "size_bytes": 1689997,
+          "size_kb": 1650.39,
+          "latency_b1": {
+            "median_ms": 0.5927349999979015,
+            "p95_ms": 0.7746782999618061,
+            "mean_ms": 0.6170106750010973,
+            "std_ms": 0.06248510430689095,
+            "throughput_samples_per_s": 1687.0945700920993
+          },
+          "latency_b256": {
+            "median_ms": 175.76641050004582,
+            "p95_ms": 191.80890865007424,
+            "mean_ms": 177.11075792999964,
+            "std_ms": 9.956843728416297,
+            "throughput_samples_per_s": 1456.4785118595414
+          }
+        }
+      ]
+    },
+    "Hard Student (MLP)": {
+      "name": "Hard Student (MLP)",
+      "params": 25450,
+      "size_bytes": 104093,
+      "size_kb": 101.65,
+      "b1_median_ms": 0.022290499998689484,
+      "b256_median_ms": 0.2406415000564266,
+      "b1_throughput_samples_per_s": 44862.16101293343,
+      "b256_throughput_samples_per_s": 1063823.1557730986,
+      "all_runs": [
+        {
+          "name": "Hard Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.030674000015551428,
+            "p95_ms": 0.05477804995734914,
+            "mean_ms": 0.0348611620003112,
+            "std_ms": 0.010050025190535345,
+            "throughput_samples_per_s": 32600.899768305713
+          },
+          "latency_b256": {
+            "median_ms": 0.2765440000871422,
+            "p95_ms": 0.5962574499562834,
+            "mean_ms": 0.3320487900043645,
+            "std_ms": 0.11430007931741103,
+            "throughput_samples_per_s": 925711.640532181
+          }
+        },
+        {
+          "name": "Hard Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.022290499998689484,
+            "p95_ms": 0.02463114997226512,
+            "mean_ms": 0.02276071700043758,
+            "std_ms": 0.0012117210637839343,
+            "throughput_samples_per_s": 44862.16101293343
+          },
+          "latency_b256": {
+            "median_ms": 0.2406045000498125,
+            "p95_ms": 0.2474533499764675,
+            "mean_ms": 0.24200224999617603,
+            "std_ms": 0.003535799901692501,
+            "throughput_samples_per_s": 1063986.7498197255
+          }
+        },
+        {
+          "name": "Hard Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.022276499976214836,
+            "p95_ms": 0.023122600015312855,
+            "mean_ms": 0.022447023998324767,
+            "std_ms": 0.0011271922622581275,
+            "throughput_samples_per_s": 44890.35535509278
+          },
+          "latency_b256": {
+            "median_ms": 0.2406415000564266,
+            "p95_ms": 0.24742375001096661,
+            "mean_ms": 0.2420277300120688,
+            "std_ms": 0.003648349926264158,
+            "throughput_samples_per_s": 1063823.1557730986
+          }
+        }
+      ]
+    },
+    "Distilled Student (MLP)": {
+      "name": "Distilled Student (MLP)",
+      "params": 25450,
+      "size_bytes": 104093,
+      "size_kb": 101.65,
+      "b1_median_ms": 0.022439500014570513,
+      "b256_median_ms": 0.24067699996521696,
+      "b1_throughput_samples_per_s": 44564.27279354155,
+      "b256_throughput_samples_per_s": 1063666.2416308892,
+      "all_runs": [
+        {
+          "name": "Distilled Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.029540000014094403,
+            "p95_ms": 0.055926549958940086,
+            "mean_ms": 0.034412896998333053,
+            "std_ms": 0.01033164953410273,
+            "throughput_samples_per_s": 33852.40350449799
+          },
+          "latency_b256": {
+            "median_ms": 0.2909789999989698,
+            "p95_ms": 0.4448390000504787,
+            "mean_ms": 0.3152438599988727,
+            "std_ms": 0.061197536634808605,
+            "throughput_samples_per_s": 879788.575810991
+          }
+        },
+        {
+          "name": "Distilled Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.02226900005553034,
+            "p95_ms": 0.02323504996866177,
+            "mean_ms": 0.02243531600049664,
+            "std_ms": 0.0010024678058852357,
+            "throughput_samples_per_s": 44905.47386530081
+          },
+          "latency_b256": {
+            "median_ms": 0.24055900001940245,
+            "p95_ms": 0.2450218000149107,
+            "mean_ms": 0.241414969999596,
+            "std_ms": 0.0020136542312040357,
+            "throughput_samples_per_s": 1064187.9953747403
+          }
+        },
+        {
+          "name": "Distilled Student (MLP)",
+          "params": 25450,
+          "size_bytes": 104093,
+          "size_kb": 101.65,
+          "latency_b1": {
+            "median_ms": 0.022439500014570513,
+            "p95_ms": 0.023259400040842593,
+            "mean_ms": 0.022619401996053057,
+            "std_ms": 0.0012319826061344358,
+            "throughput_samples_per_s": 44564.27279354155
+          },
+          "latency_b256": {
+            "median_ms": 0.24067699996521696,
+            "p95_ms": 0.25540919994000433,
+            "mean_ms": 0.2430941200009329,
+            "std_ms": 0.005203051201260714,
+            "throughput_samples_per_s": 1063666.2416308892
+          }
+        }
+      ]
+    }
+  },
+  "ratios": {
+    "teacher_vs_hard": {
+      "param_ratio": 16.56746561886051,
+      "size_ratio": 16.23545291229958,
+      "b1_latency_ratio": 35.27289652873596,
+      "b256_latency_ratio": 978.8964079127795
+    },
+    "teacher_vs_distilled": {
+      "param_ratio": 16.56746561886051,
+      "size_ratio": 16.23545291229958,
+      "b1_latency_ratio": 35.03868176728678,
+      "b256_latency_ratio": 978.7520204839802
+    }
+  },
+  "repeats": 3,
+  "runs_b1": 1000,
+  "runs_b256": 100
+}
