@@ -1,0 +1,4 @@
+Model,Parameters,Size (KB),Latency b=1 (ms),Latency b=256 (ms),Dev Accuracy (%)
+Teacher (CNN),"421,642",1650.39,0.7863,235.56,91.82% ± 0.23%
+Hard Student (MLP),"25,450",101.65,0.0223,0.24,87.34% ± 0.21%
+Distilled Student (MLP),"25,450",101.65,0.0224,0.24,86.85% ± 0.12%
