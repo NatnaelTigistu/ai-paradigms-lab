@@ -1,0 +1,141 @@
+{
+  "log": [
+    {
+      "round": 0,
+      "accepted": true,
+      "reason": "initial",
+      "n_candidates": 0,
+      "n_verified": 0,
+      "n_selected": 0,
+      "selected_precision": 1.0,
+      "train_size": 2005,
+      "cand_gate_acc": 0.8543125987052917,
+      "cand_monitor_acc": 0.8504897356033325,
+      "current_gate_acc": 0.8543125987052917,
+      "current_monitor_acc": 0.8504897356033325,
+      "current_min_class_acc": 0.654618501663208,
+      "current_worst_class": 2,
+      "label_noise_in_training": 0.0,
+      "seconds": 18.413742542266846
+    },
+    {
+      "round": 1,
+      "accepted": false,
+      "reason": "rejected: gain -0.0048 below 0.001",
+      "n_candidates": 20000,
+      "n_verified": 13730,
+      "n_selected": 3000,
+      "selected_precision": 0.95,
+      "train_size": 5005,
+      "cand_gate_acc": 0.8495097160339355,
+      "cand_monitor_acc": 0.8484908938407898,
+      "current_gate_acc": 0.8543125987052917,
+      "current_monitor_acc": 0.8504897356033325,
+      "current_min_class_acc": 0.654618501663208,
+      "current_worst_class": 2,
+      "label_noise_in_training": 0.0,
+      "seconds": 7.910238742828369
+    },
+    {
+      "round": 2,
+      "accepted": false,
+      "reason": "rejected: gain -0.0088 below 0.001",
+      "n_candidates": 20000,
+      "n_verified": 13730,
+      "n_selected": 3000,
+      "selected_precision": 0.95,
+      "train_size": 5005,
+      "cand_gate_acc": 0.8455073237419128,
+      "cand_monitor_acc": 0.8410953283309937,
+      "current_gate_acc": 0.8543125987052917,
+      "current_monitor_acc": 0.8504897356033325,
+      "current_min_class_acc": 0.654618501663208,
+      "current_worst_class": 2,
+      "label_noise_in_training": 0.0,
+      "seconds": 8.708941459655762
+    }
+  ],
+  "stop_reason": "patience",
+  "round0_gate_acc": 0.8543125987052917,
+  "round0_monitor_acc": 0.8504897356033325,
+  "round0_per_class": [
+    0.8035714030265808,
+    0.9720559120178223,
+    0.654618501663208,
+    0.8809523582458496,
+    0.8152610659599304,
+    0.9487179517745972,
+    0.6811023354530334,
+    0.9260042309761047,
+    0.9179999828338623,
+    0.9464285969734192
+  ],
+  "final_monitor_acc": 0.8504897356033325,
+  "final_per_class": [
+    0.8217821717262268,
+    0.9620758295059204,
+    0.671342670917511,
+    0.8829365372657776,
+    0.7955911755561829,
+    0.9271653294563293,
+    0.624015748500824,
+    0.9198312163352966,
+    0.9481037855148315,
+    0.9563491940498352
+  ],
+  "n_accepted_rounds": 0,
+  "n_rejected_rounds": 2,
+  "n_pseudo_labels_total": 0,
+  "total_verifier_calls": 40000,
+  "total_seconds": 35.079123735427856,
+  "verifier": "agreement",
+  "gate_enabled": true,
+  "seed": 2,
+  "config": {
+    "data": {
+      "root": "./data",
+      "split_seed": 42,
+      "dev_size": 10000
+    },
+    "training": {
+      "epochs": 8,
+      "batch_size": 128,
+      "lr": 0.001,
+      "optimizer": "adam",
+      "weight_decay": 0.0001
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "recursive": {
+      "model": "small_cnn",
+      "model_kwargs": {},
+      "n_labeled": 2000,
+      "pool_size": 20000,
+      "rounds": 4,
+      "epochs_initial": 30,
+      "epochs_per_round": 4,
+      "lr_round": 0.0005,
+      "batch_size": 128,
+      "cap_per_class": 300,
+      "curation": "random",
+      "agreement_threshold": 0.9,
+      "self_conf_threshold": 0.9,
+      "gate": {
+        "enabled": true,
+        "min_improvement": 0.001,
+        "max_class_drop": 0.05,
+        "patience": 2
+      },
+      "seeds": [
+        0,
+        1,
+        2
+      ]
+    }
+  }
+}
