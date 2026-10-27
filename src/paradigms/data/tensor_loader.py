@@ -6,9 +6,10 @@ import math
 from typing import Any, Iterator, Tuple
 
 import torch
-from torch.utils.data import DataLoader, Dataset, Subset
+from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset
 
 from paradigms.data.fashion_mnist import MEAN, STD
+from paradigms.recursive.datasets import PseudoLabeledDataset
 from paradigms.seed import make_generator
 
 
@@ -68,27 +69,67 @@ class TensorLoader:
                 yield self.X[start:end], self.Y[start:end]
 
 
+def materialize(dataset: Dataset) -> tuple[torch.Tensor, torch.Tensor]:
+    """Materialize a Dataset into contiguous (X, Y) float and long tensors."""
+    if isinstance(dataset, PseudoLabeledDataset):
+        X, _ = materialize(Subset(dataset.base, dataset.indices))
+        Y = torch.as_tensor(dataset.labels, dtype=torch.long)
+        return X, Y
+
+    if isinstance(dataset, ConcatDataset):
+        if len(dataset.datasets) == 0:
+            return torch.empty(0, 1, 28, 28), torch.empty(0, dtype=torch.long)
+        parts = [materialize(part) for part in dataset.datasets]
+        X = torch.cat([p[0] for p in parts], dim=0)
+        Y = torch.cat([p[1] for p in parts], dim=0)
+        return X, Y
+
+    if isinstance(dataset, Subset):
+        base_ds = dataset.dataset
+        if hasattr(base_ds, "data") and hasattr(base_ds, "targets"):
+            idx = torch.as_tensor(dataset.indices, dtype=torch.long)
+            raw_x = base_ds.data[idx]
+            raw_y = base_ds.targets
+            if isinstance(raw_y, torch.Tensor):
+                raw_y = raw_y[idx]
+            else:
+                raw_y = torch.as_tensor([raw_y[i] for i in idx], dtype=torch.long)
+            X = ((raw_x.float() / 255.0 - MEAN) / STD).unsqueeze(1)
+            Y = raw_y.clone().detach().long() if isinstance(raw_y, torch.Tensor) else torch.as_tensor(raw_y, dtype=torch.long)
+            return X, Y
+        else:
+            base_x, base_y = materialize(base_ds)
+            idx = torch.as_tensor(dataset.indices, dtype=torch.long)
+            return base_x[idx], base_y[idx]
+
+    if hasattr(dataset, "data") and hasattr(dataset, "targets"):
+        raw_x = dataset.data
+        raw_y = dataset.targets
+        X = ((raw_x.float() / 255.0 - MEAN) / STD).unsqueeze(1)
+        if isinstance(raw_y, torch.Tensor):
+            Y = raw_y.clone().detach().long()
+        else:
+            Y = torch.as_tensor(raw_y, dtype=torch.long)
+        return X, Y
+
+    if len(dataset) == 0:
+        return torch.empty(0, 1, 28, 28), torch.empty(0, dtype=torch.long)
+
+    loader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
+    raw_x, raw_y = next(iter(loader))
+    if not isinstance(raw_x, torch.Tensor):
+        raw_x = torch.as_tensor(raw_x)
+    if not isinstance(raw_y, torch.Tensor):
+        raw_y = torch.as_tensor(raw_y, dtype=torch.long)
+    return raw_x, raw_y
+
+
 def make_fast_loader(
     dataset: Dataset,
     batch_size: int,
     shuffle: bool = False,
     seed: int = 0,
 ) -> TensorLoader:
-    """Materialize a Fashion-MNIST Dataset or Subset into a fast TensorLoader."""
-    if isinstance(dataset, Subset):
-        idx = torch.as_tensor(dataset.indices, dtype=torch.long)
-        base_ds = dataset.dataset
-        raw_x = base_ds.data[idx]
-        raw_y = base_ds.targets[idx]
-    elif hasattr(dataset, "data") and hasattr(dataset, "targets"):
-        raw_x = dataset.data
-        raw_y = dataset.targets
-    else:
-        # Fallback for generic datasets: materialize via single-batch loader
-        loader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
-        raw_x, raw_y = next(iter(loader))
-        return TensorLoader(raw_x, raw_y, batch_size=batch_size, shuffle=shuffle, seed=seed)
-
-    X = ((raw_x.float() / 255.0 - MEAN) / STD).unsqueeze(1)
-    Y = raw_y.clone().detach().long()
+    """Materialize any supported Dataset into a fast in-memory TensorLoader."""
+    X, Y = materialize(dataset)
     return TensorLoader(X, Y, batch_size=batch_size, shuffle=shuffle, seed=seed)

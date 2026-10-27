@@ -95,3 +95,28 @@ def stratified_subset(
         selected.extend(shuffled[:n_keep])
 
     return sorted(selected)
+
+
+def split_dev(
+    dev_indices: Sequence[int],
+    labels: np.ndarray | Sequence[int],
+    seed: int,
+) -> dict[str, list[int]]:
+    """Partition development indices into balanced gate and monitor sets per class."""
+    unique_classes = sorted({int(labels[i]) for i in dev_indices})
+    gate_indices: list[int] = []
+    monitor_indices: list[int] = []
+
+    for c in unique_classes:
+        idx_c = [i for i in dev_indices if int(labels[i]) == c]
+        rng = np.random.RandomState(seed)
+        shuffled = rng.permutation(idx_c).tolist()
+        half = len(shuffled) // 2
+        gate_indices.extend(shuffled[:half])
+        monitor_indices.extend(shuffled[half:])
+
+    return {
+        "gate": sorted(gate_indices),
+        "monitor": sorted(monitor_indices),
+    }
+

@@ -8,10 +8,12 @@ import torch.nn as nn
 
 from paradigms.models.cnn_teacher import TeacherCNN
 from paradigms.models.mlp_student import StudentMLP
+from paradigms.models.small_cnn import SmallCNN
 
 _REGISTRY: dict[str, Callable[..., nn.Module]] = {
     "teacher_cnn": TeacherCNN,
     "student_mlp": StudentMLP,
+    "small_cnn": SmallCNN,
 }
 
 

@@ -21,6 +21,7 @@ from paradigms.data.splits import (
     load_splits,
     make_splits,
     save_splits,
+    split_dev,
     stratified_subset,
 )
 from paradigms.seed import make_generator
@@ -61,7 +62,7 @@ class FashionData:
         self.dev_size = dev_size
 
         transform = _transform()
-        self.full_train = torchvision.datasets.FashionMNIST(
+        self._full_train = torchvision.datasets.FashionMNIST(
             root=str(self.root),
             train=True,
             download=True,
@@ -74,24 +75,36 @@ class FashionData:
             transform=transform,
         )
 
-        self.labels = np.asarray(self.full_train.targets)
+        self._train_labels = np.asarray(self._full_train.targets)
+        self.labels = self._train_labels
+        self._dev_splits: dict[str, list[int]] | None = None
 
         split_path = self.root / "splits" / f"fashion_split_{split_seed}_{dev_size}.json"
         if split_path.exists():
             self.splits = load_splits(split_path)
         else:
             self.splits = make_splits(
-                n_total=len(self.full_train),
+                n_total=len(self._full_train),
                 dev_size=dev_size,
                 split_seed=split_seed,
             )
             save_splits(self.splits, split_path)
 
+    @property
+    def full_train(self) -> torchvision.datasets.FashionMNIST:
+        """Full 60,000 sample normalized torchvision training dataset."""
+        return self._full_train
+
+    @property
+    def train_labels(self) -> np.ndarray:
+        """Numpy array of ground truth labels for the full training set."""
+        return self._train_labels
+
     def get(self, name: str, allow_test: bool = False) -> Dataset:
         """Retrieve a specific partition of the dataset.
 
         Args:
-            name: Partition name ("train", "dev", or "test").
+            name: Partition name ("train", "dev", "gate", "monitor", or "test").
             allow_test: Explicit confirmation required to access the test set.
 
         Raises:
@@ -103,6 +116,14 @@ class FashionData:
         """
         if name in ("train", "dev"):
             return Subset(self.full_train, self.splits[name])
+        elif name in ("gate", "monitor"):
+            if self._dev_splits is None:
+                self._dev_splits = split_dev(
+                    self.splits["dev"],
+                    self.train_labels,
+                    seed=self.split_seed,
+                )
+            return Subset(self.full_train, self._dev_splits[name])
         elif name == "test":
             if not allow_test:
                 raise PermissionError(
@@ -110,7 +131,7 @@ class FashionData:
                 )
             return self.test_dataset
         else:
-            raise ValueError(f"Unknown split name '{name}'. Expected 'train', 'dev', or 'test'.")
+            raise ValueError(f"Unknown split name '{name}'. Expected 'train', 'dev', 'gate', 'monitor', or 'test'.")
 
     def train_indices_subset(self, fraction: float, seed: int) -> Subset:
         """Generate a stratified, nested subset of the training set.
