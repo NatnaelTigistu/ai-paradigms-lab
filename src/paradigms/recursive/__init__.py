@@ -1,4 +1,4 @@
-"""Recursive self-improvement paradigms, datasets, candidate generation, and curation."""
+"""Recursive self-improvement paradigms, datasets, candidate generation, curation, and verifiers."""
 
 from paradigms.recursive.curate import curate
 from paradigms.recursive.datasets import PseudoLabeledDataset
@@ -9,6 +9,14 @@ from paradigms.recursive.state import (
     assert_no_leakage,
     make_bundle,
     make_partition,
+)
+from paradigms.recursive.verifiers import (
+    AgreementVerifier,
+    NoVerifier,
+    OracleVerifier,
+    SelfConfidenceVerifier,
+    Verifier,
+    build_verifier,
 )
 
 __all__ = [
@@ -21,4 +29,10 @@ __all__ = [
     "Candidates",
     "generate",
     "curate",
+    "Verifier",
+    "OracleVerifier",
+    "AgreementVerifier",
+    "SelfConfidenceVerifier",
+    "NoVerifier",
+    "build_verifier",
 ]

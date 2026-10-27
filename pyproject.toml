@@ -17,6 +17,7 @@ dependencies = [
     "pyyaml",
     "tqdm",
     "pytest",
+    "scikit-learn",
 ]
 
 [tool.setuptools.packages.find]
