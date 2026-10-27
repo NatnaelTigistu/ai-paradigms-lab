@@ -1,8 +1,10 @@
-"""Recursive self-improvement paradigms, datasets, candidate generation, curation, and verifiers."""
+"""Recursive self-improvement paradigms, datasets, candidate generation, curation, verifiers, gate, and loop."""
 
 from paradigms.recursive.curate import curate
 from paradigms.recursive.datasets import PseudoLabeledDataset
+from paradigms.recursive.gate import decide_gate
 from paradigms.recursive.generate import Candidates, generate
+from paradigms.recursive.loop import run_loop
 from paradigms.recursive.state import (
     LoopBundle,
     LoopPartition,
@@ -35,4 +37,6 @@ __all__ = [
     "SelfConfidenceVerifier",
     "NoVerifier",
     "build_verifier",
+    "decide_gate",
+    "run_loop",
 ]
