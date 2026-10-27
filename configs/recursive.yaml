@@ -1,0 +1,16 @@
+recursive:
+  model: small_cnn
+  model_kwargs: {}
+  n_labeled: 2000
+  pool_size: 20000
+  rounds: 4
+  epochs_initial: 30
+  epochs_per_round: 4
+  lr_round: 0.0005
+  batch_size: 128
+  cap_per_class: 300
+  curation: random              # random | confident
+  agreement_threshold: 0.9
+  self_conf_threshold: 0.9
+  gate: {enabled: true, min_improvement: 0.001, max_class_drop: 0.05, patience: 2}
+  seeds: [0, 1, 2]

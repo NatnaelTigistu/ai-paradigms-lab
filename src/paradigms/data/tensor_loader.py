@@ -9,7 +9,6 @@ import torch
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset
 
 from paradigms.data.fashion_mnist import MEAN, STD
-from paradigms.recursive.datasets import PseudoLabeledDataset
 from paradigms.seed import make_generator
 
 
@@ -71,6 +70,8 @@ class TensorLoader:
 
 def materialize(dataset: Dataset) -> tuple[torch.Tensor, torch.Tensor]:
     """Materialize a Dataset into contiguous (X, Y) float and long tensors."""
+    from paradigms.recursive.datasets import PseudoLabeledDataset
+
     if isinstance(dataset, PseudoLabeledDataset):
         X, _ = materialize(Subset(dataset.base, dataset.indices))
         Y = torch.as_tensor(dataset.labels, dtype=torch.long)
