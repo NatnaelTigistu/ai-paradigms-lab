@@ -31,3 +31,17 @@ A rigorous, label-efficient study evaluating distillation across low-data regime
 - **Motivation & Retrospective**: [WHY_RETRAIN.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/WHY_RETRAIN.md)
 - **Experimental Protocol**: [PROTOCOL.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/PROTOCOL.md)
 - **Results & Verdicts**: [RESULTS.md](file:///home/natnale/ai-paradigms-lab/docs/phase1_v2/RESULTS.md)
+
+## Phase 2: Recursive Self-Improvement Loop
+
+Phase 2: complete
+
+### Phase 2 Final Official Test Results
+
+| Configuration | Round 0 Test Acc (Mean ± Std) | Final Test Acc (Mean ± Std) | Paired Gain (Final - R0) | Wins / Seeds |
+| :--- | :--- | :--- | :--- | :--- |
+| `oracle_gate` | 83.89% ± 0.83% | 86.08% ± 0.26% | +2.19% ± 1.07% | 3 / 3 |
+| `agreement_gate` | 83.89% ± 0.83% | 83.89% ± 0.83% | +0.00% ± 0.00% | 0 / 3 |
+| `selfconf_gate` | 83.89% ± 0.83% | 83.97% ± 0.90% | +0.08% ± 0.12% | 1 / 3 |
+| `selfconf_nogate` | 83.89% ± 0.83% | 84.97% ± 0.32% | +1.08% ± 0.54% | 3 / 3 |
+| `control_none` | 83.89% ± 0.83% | 83.89% ± 0.83% | +0.00% ± 0.00% | 0 / 3 |

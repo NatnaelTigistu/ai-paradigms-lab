@@ -1,0 +1,26 @@
+Config,Round,Mean Selected,Precision,Accepted Fraction,Current Monitor Acc
+oracle_gate,0,-,-,100.0%,84.32% ± 0.72%
+oracle_gate,1,"3,000",1.0000,66.7%,85.38% ± 0.61%
+oracle_gate,2,"3,000",1.0000,33.3%,85.59% ± 0.35%
+oracle_gate,3,"3,000",1.0000,66.7%,85.92% ± 0.50%
+oracle_gate,4,"3,000",1.0000,100.0%,86.39% ± 0.53%
+agreement_gate,0,-,-,100.0%,84.32% ± 0.72%
+agreement_gate,1,"2,921",0.9485,0.0%,84.32% ± 0.72%
+agreement_gate,2,"2,921",0.9547,0.0%,84.32% ± 0.72%
+agreement_gate,3,0,-,0.0%,84.32% ± 0.72%
+agreement_gate,4,0,-,0.0%,84.32% ± 0.72%
+selfconf_gate,0,-,-,100.0%,84.32% ± 0.72%
+selfconf_gate,1,"2,929",0.9383,33.3%,84.42% ± 0.76%
+selfconf_gate,2,"2,984",0.9327,0.0%,84.42% ± 0.76%
+selfconf_gate,3,"3,000",0.9250,33.3%,84.43% ± 0.77%
+selfconf_gate,4,"3,000",0.9090,0.0%,84.43% ± 0.77%
+selfconf_nogate,0,-,-,100.0%,84.32% ± 0.72%
+selfconf_nogate,1,"2,929",0.9383,100.0%,84.95% ± 0.28%
+selfconf_nogate,2,"3,000",0.9246,100.0%,85.11% ± 0.19%
+selfconf_nogate,3,"2,960",0.9047,100.0%,84.80% ± 0.26%
+selfconf_nogate,4,"2,872",0.8855,100.0%,85.25% ± 0.26%
+control_none,0,-,-,100.0%,84.32% ± 0.72%
+control_none,1,0,-,0.0%,84.32% ± 0.72%
+control_none,2,0,-,0.0%,84.32% ± 0.72%
+control_none,3,0,-,0.0%,84.32% ± 0.72%
+control_none,4,0,-,0.0%,84.32% ± 0.72%
