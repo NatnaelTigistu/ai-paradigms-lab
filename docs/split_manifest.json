@@ -1,0 +1,39 @@
+{
+  "dataset_name": "FashionMNIST",
+  "dataset_source": "torchvision.datasets.FashionMNIST",
+  "split_seed": 42,
+  "sizes": {
+    "train": 50000,
+    "dev": 10000,
+    "gate": 4997,
+    "monitor": 5003,
+    "test": 10000
+  },
+  "hashes": {
+    "train_sha256": "2aa19d8c872458d082ce91a3efb136a18659196ee953a605c70d9b0f71b30c58",
+    "dev_sha256": "21d3012417c9b2fcc21524065fbe3d32b105014bd1bac5712bb2753aa7d481e6",
+    "gate_sha256": "cf6ae10381946b94d16fb3152832fe745aa895fcf65bb0413391aedb812dfb94",
+    "monitor_sha256": "287f908038d45c77a7e7f38ff574ec541deaf336a7356b92d74491c5b9e69b87",
+    "test_sha256": "a74675bfed3834ac1c3140b2d7fb7d93d90a76608cc08515a5019a1cb2075ff4"
+  },
+  "phase2_partitions": {
+    "seed0": {
+      "labeled_size": 2005,
+      "pool_size": 20000,
+      "labeled_sha256": "ddafb45ebfa0ec84c695d61012908911f1627147dd8ae3acd70ffeffa1e6ca52",
+      "pool_sha256": "b94cb7f311073b85c5fd8427ba00f0c438e0fca86874435cf077fbc2f3631336"
+    },
+    "seed1": {
+      "labeled_size": 2005,
+      "pool_size": 20000,
+      "labeled_sha256": "2dfe43846ecc6f5fae0eee345442b889c054979159aeb45ed827cebcd448e0c6",
+      "pool_sha256": "4a0e14dae4ccf987943196f7f0b598b9f41f8538dad2741fb427318e07fb42c5"
+    },
+    "seed2": {
+      "labeled_size": 2005,
+      "pool_size": 20000,
+      "labeled_sha256": "a3a6a2b346eb5a871d88052e69a5b5de98fab8abdbe352e6f6f231529567f314",
+      "pool_sha256": "d9a759ae3ae51022da8fc49a5b31ef6565d3da85b36a1ada6a5e54880881aa4b"
+    }
+  }
+}
