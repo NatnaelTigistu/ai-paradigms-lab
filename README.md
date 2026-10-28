@@ -36,6 +36,9 @@ A rigorous, label-efficient study evaluating distillation across low-data regime
 
 Phase 2: complete
 
+- **Comprehensive Deep Dive & Guide**: [RECURSIVE_LOOP_GUIDE.md](file:///home/natnale/ai-paradigms-lab/docs/RECURSIVE_LOOP_GUIDE.md)
+- **Empirical Findings & Verdicts**: [rec_findings.md](file:///home/natnale/ai-paradigms-lab/reports/recursive/tables/rec_findings.md)
+
 ### Phase 2 Final Official Test Results
 
 | Configuration | Round 0 Test Acc (Mean ± Std) | Final Test Acc (Mean ± Std) | Paired Gain (Final - R0) | Wins / Seeds |

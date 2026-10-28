@@ -67,3 +67,22 @@ This document summarizes empirical measurements recorded across all five recursi
 | `selfconf_gate` | +0.11% | 0.15% | 1 / 3 | **TIE** |
 | `selfconf_nogate` | +0.93% | 0.59% | 3 / 3 | **WIN** |
 | `control_none` | +0.00% | 0.00% | 0 / 3 | **TIE** |
+
+---
+
+## Empirical Interpretation & Scientific Analysis
+
+1. **The Oracle Self-Improvement Ceiling**:
+   With access to ground-truth checks (`oracle_gate`), the SmallCNN achieved continuous monotonic improvements across rounds (+2.07% monitor gain, +2.19% official test gain, 3/3 wins). This proves that the recursive learning architecture and dataset expansion mechanics are sound when verification noise is eliminated.
+
+2. **The Confirmation Bias Trap in Naive Self-Training**:
+   `selfconf_nogate` recorded a statistically significant global accuracy win (+0.93% monitor, +1.08% test), but this global metric masks severe internal failure. Without gating oversight, label noise accumulated to +8.66% in the training set, causing catastrophic per-class collapse on Class 4 (Coat), which dropped by an average of -11.36% across seeds (-19.00% on seed 0). The model sacrificed fine-grained semantic boundaries to reinforce easy predictions.
+
+3. **The Acceptance Gate as an Essential Safety Mechanism**:
+   In `selfconf_gate`, the dual-metric gate detected early per-class degradation and rolled back corrupted candidates. While the generator's quality was insufficient to produce acceptable iterations under the gate's strict safety criteria (yielding a statistical TIE with control), the gate successfully restricted training noise to +2.17% and prevented catastrophic class collapse.
+
+4. **The Representation Gap in Independent Verifiers**:
+   Although the Random Forest in `agreement_gate` delivered high pseudo-label precision (95.16% across rounds 1-2), it operated on flat 784-dimensional raw pixels with only 2,000 training samples. It primarily agreed with the CNN on easy, prototypical examples where the CNN was already competent, offering little new signal on hard edge cases. Consequently, candidate gains were marginal (+0.02% to +0.08%), failing the gate's minimum improvement threshold.
+
+5. **Data-Driven vs. Compute-Driven Improvement**:
+   `control_none` confirmed that 4 additional training epochs per round on the fixed labeled set produced zero accuracy gain (+0.00% across all seeds). All empirical gains observed in `oracle_gate` and `selfconf_nogate` are strictly attributable to pseudo-label dataset expansion.

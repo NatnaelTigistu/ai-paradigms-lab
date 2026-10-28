@@ -92,7 +92,7 @@ def run_loop(
     if ckpt_path is not None:
         ckpt_path.mkdir(parents=True, exist_ok=True)
 
-    # ------------------ ROUND 0: Initial Supervised Seed ------------------
+    # Initial supervised seed training (Round 0)
     t0_r0 = time.time()
     model = build_model(model_name, **model_kwargs)
     fit(
@@ -146,7 +146,7 @@ def run_loop(
 
     stop_reason = "completed"
 
-    # ------------------ ROUNDS 1..N: Recursive Loop ------------------
+    # Recursive loop rounds
     for r in range(1, rounds + 1):
         t0_round = time.time()
         if len(pool) == 0:
@@ -180,11 +180,9 @@ def run_loop(
         else:
             precision = 0.0
 
-        candidate = copy.deepcopy(current)  # update a COPY, never the original
+        candidate = copy.deepcopy(current)
 
-        # Accepted pseudo-labels are fixed, not refreshed across rounds, to provide monotonic
-        # dataset expansion, anchor the model against catastrophic drift/forgetting, and prevent
-        # cyclical prediction flip-flops.
+        # Fixed pseudo-labels monotonically expand the training set to prevent drift
         all_pseudo_idx = acc_idx + sel_idx
         all_pseudo_lab = acc_lab + sel_lab
 
